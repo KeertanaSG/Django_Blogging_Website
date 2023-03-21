@@ -10,7 +10,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/main.css' %}">
 
     {% if title %}
         <title>Glasgow Life - {{ title }}</title>
@@ -82,21 +82,20 @@
                 {% block trending_content %}{% endblock %}
                 </p>
               </div>
-          </div>
             <div class="col-md-12">
               <div class="content-section" >
                 <h3 style="color:black">Tags</h3>
-                <p class='text-muted'>Explore the world of Glasgow
-                <ul class="list-group">
-                  <li class="list-group-item list-group-item-light"><a href="{% url 'blog-home' %}"> Travel</a> </li>
-                  <li class="list-group-item list-group-item-light"><a href="{% url 'blog-home' %}"> Food </a></li>
-                  <li class="list-group-item list-group-item-light"><a href="{% url 'blog-home' %}"> Life </a></li>
-                  <li class="list-group-item list-group-item-light"><a href="{% url 'blog-home' %}"> #Confessions </a></li>
-                  <li class="list-group-item list-group-item-light"><a href="{% url 'blog-home' %}"> #SeriousOnly </a></li>
-                </ul>
-                </p>
+                <p class='text-muted'>Explore the world of Glasgow</p>
+                <div class="btn-group d-flex" role="group" aria-label="Tags">
+                  <button type="button" class="btn btn-light"><a href="{% url 'blog-home' %}">Travel</a></button>
+                  <button type="button" class="btn btn-light"><a href="{% url 'blog-home' %}">Food</a></button>
+                  <button type="button" class="btn btn-light"><a href="{% url 'blog-home' %}">Life</a></button>
+                  <button type="button" class="btn btn-light"><a href="{% url 'blog-home' %}">#Confessions</a></button>
+                  <button type="button" class="btn btn-light"><a href="{% url 'blog-home' %}">#SeriousOnly</a></button>
+                </div>
               </div>
-          </div>
+            </div>
+          </div>              
         </div>
       </div>
     </main>

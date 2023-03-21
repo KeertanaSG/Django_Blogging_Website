@@ -83,3 +83,16 @@ a.article-title:hover {
 .account-heading {
   font-size: 2.5rem;
 }
+
+.btn-group {
+  flex-wrap: wrap;
+}
+
+.btn-group > * {
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.btn-group > *:last-child {
+  margin-right: 0;
+}
