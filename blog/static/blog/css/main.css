@@ -96,3 +96,32 @@ a.article-title:hover {
 .btn-group > *:last-child {
   margin-right: 0;
 }
+
+.content-section {
+  margin-bottom: 20px;
+}
+
+.btn-group {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.alert {
+  margin-bottom: 0;
+}
+
+.col-md-4 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+@media (max-width: 767.98px) {
+  .btn-group {
+    flex-wrap: wrap;
+  }
+  .btn-group .btn {
+    margin-bottom: 10px;
+  }
+}
