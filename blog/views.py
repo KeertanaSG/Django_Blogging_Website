@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
-from .forms import PostForm
+from .forms import PostForm, UpdateForm
 from django.views.generic import (
     ListView,
     DetailView,
@@ -54,7 +54,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Post
-    fields = ['title','header_image','content','category']
+    form_class = UpdateForm
 
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -83,3 +83,7 @@ def school(request):
 
 def academic(request):
     return render(request, 'blog/academic.html', {'title': 'Academic'})
+
+def CategoryView(request, cats):
+    category_post = Post.objects.filter(category=cats)
+    return render(request,'blog/categories.html', {'cats': cats, 'category_post': category_post})

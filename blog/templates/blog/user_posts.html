@@ -13,6 +13,11 @@
             {% if post.header_image %}
                 <img src="{{ post.header_image.url }}" alt="{{ post.title }} header image" style="max-width:100%; height:auto; margin-top:10px;">
             {% endif %}
+            {% if post.category %}
+              <div class="button-container">
+                <a href="#" class="btn btn-outline-info rounded-pill mt-2 mb-3 category-btn">{{ post.category }}</a>
+              </div>
+            {% endif %}
             <p class="article-content">{{ post.content }}</p>
           </div>
         </article>

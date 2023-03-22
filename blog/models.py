@@ -19,7 +19,7 @@ class Post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     header_image = models.ImageField(default='default.jpg', upload_to='header_pics')
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
+    category = models.CharField(max_length=255, default='unassigned')
 
     def __str__(self):
         return self.title

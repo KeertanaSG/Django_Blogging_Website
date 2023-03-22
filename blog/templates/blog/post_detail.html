@@ -18,6 +18,11 @@
       <img src="{{ object.header_image.url }}" alt="{{ object.title }} header image" style="max-width: 500px; height: auto;">
       {% endif %}
       <h2 class="article-title">{{ object.title }}</h2>
+      {% if object.category %}
+      <div class="button-container">
+        <a href="#" class="btn btn-outline-info rounded-pill mt-2 mb-3 category-btn">{{ object.category }}</a>
+      </div>
+      {% endif %}
       <p class="article-content">{{ object.content }}</p>
     </div>
   </article>
