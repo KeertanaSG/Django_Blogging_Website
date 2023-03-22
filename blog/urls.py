@@ -19,4 +19,9 @@ urlpatterns = [
     path('school/', views.school, name='blog-school'),
     path('academic/', views.academic, name='blog-academic'),
     path('category/<str:cats>/', views.CategoryView, name='category'),
+    path('category/Travel/', views.CategoryView, name='cat_travel'),
+    path('category/Life/', views.CategoryView, name='cat_life'),
+    path('category/Food/', views.CategoryView, name='cat_food'),
+    path('category/#SeriousOnly/', views.CategoryView, name='cat_serious'),
+    path('category/#Confessions/', views.CategoryView, name='cat_conf'),
 ]
