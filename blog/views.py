@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.utils import timezone
 from .forms import PostForm, UpdateForm
 from django.views.generic import (
     ListView,
@@ -9,7 +10,8 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .models import Post
+from .models import Post, Category
+
 
 
 def home(request):
@@ -40,6 +42,12 @@ class UserPostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
+
+    def get(self, request, *args, **kwargs):
+        post = self.get_object()
+        post.views += 1
+        post.save()
+        return super().get(request, *args, **kwargs)
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -77,12 +85,30 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             return True
         return False
 
+class TopPostsListView(ListView):
+    model = Post
+    template_name = 'blog/top_posts.html' 
+    context_object_name = 'trending_posts'
+    ordering = ['-views']
+    paginate_by = 5
 
-def school(request):
-    return render(request, 'blog/school.html', {'title': 'School'})
+    def get_queryset(self):
+        # Get the posts with the most page views in the last 30 days
+        start_date = timezone.now() - timezone.timedelta(days=30)
+        return Post.objects.filter(date_posted__gte=start_date).order_by('-views')[:5]
+    
+    
+class CategoryListView(ListView):
+    model = Category
+    template_name = 'blog/discover.html'
+    context_object_name = 'categories'
 
-def academic(request):
-    return render(request, 'blog/academic.html', {'title': 'Academic'})
+
+def info(request):
+    return render(request, 'blog/blog-info.html', {'title': 'About Us'})
+
+def discover(request):
+    return render(request, 'blog/discover.html', {'title': 'Discover'})
 
 def CategoryView(request, cats):
     category_post = Post.objects.filter(category=cats)
