@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.urls import reverse
 
+#Category model with name
 class Category(models.Model):
     name = models.CharField(max_length=100)
 
@@ -12,7 +13,7 @@ class Category(models.Model):
     def get_absolute_url(self):
         return reverse('home', kwargs={'pk': self.pk})
 
-
+#creating a model for Post
 class Post(models.Model):
     title = models.CharField(max_length=100)
     content = models.TextField()
@@ -27,7 +28,8 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('post-detail', kwargs={'pk': self.pk})
-    
+
+#creating a model for comment 
 class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
