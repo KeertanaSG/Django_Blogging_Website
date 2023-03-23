@@ -1,6 +1,6 @@
 from django import forms
 from django.forms.widgets import ClearableFileInput
-from .models import Post, Category
+from .models import Post, Category, Comment
 
 choices = Category.objects.all().values_list('name','name')
 
@@ -35,4 +35,14 @@ class UpdateForm(forms.ModelForm):
             'header_image': ClearableFileInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder':'This is where you can post your content'}),
             'category': forms.Select(choices=choices_list,attrs={'class': 'form-control'})
+        }
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['name', 'body']
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Your name'}),
+            'body': forms.Textarea(attrs={'placeholder': 'Leave a comment'}),
         }

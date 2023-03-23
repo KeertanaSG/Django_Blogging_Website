@@ -1,8 +1,8 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
 from django.utils import timezone
-from .forms import PostForm, UpdateForm
+from .forms import PostForm, UpdateForm, CommentForm
 from django.views.generic import (
     ListView,
     DetailView,
@@ -10,7 +10,7 @@ from django.views.generic import (
     UpdateView,
     DeleteView
 )
-from .models import Post, Category
+from .models import Post, Category, Comment
 
 
 
@@ -48,6 +48,12 @@ class PostDetailView(DetailView):
         post.views += 1
         post.save()
         return super().get(request, *args, **kwargs)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        comments = Comment.objects.filter(post=self.object)
+        context['comments'] = comments
+        return context
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
@@ -113,3 +119,21 @@ def discover(request):
 def CategoryView(request, cats):
     category_post = Post.objects.filter(category=cats)
     return render(request,'blog/categories.html', {'cats': cats, 'category_post': category_post})
+
+def add_comment(request, pk):
+    post = get_object_or_404(Post, pk=pk)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = Comment(
+                post=post,
+                name=form.cleaned_data['name'],
+                body=form.cleaned_data['body']
+            )
+            comment.save()
+            return redirect('post-detail', pk=post.pk)
+    else:
+        form = CommentForm()
+
+    return render(request, 'blog/add_comment.html', {'post': post, 'form': form})

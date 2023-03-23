@@ -1,4 +1,4 @@
-{% extends "blog/base.html" %}
+{{% extends "blog/base.html" %}
 
 {% block content %}
   <article class="media content-section">
@@ -24,6 +24,22 @@
       </div>
       {% endif %}
       <p class="article-content">{{ object.content }}</p>
+      <hr>
+      {% for comment in comments %}
+      <div class="media content-section">
+          <img class="rounded-circle article-img" src="{{ comment.image_url }}">
+          <div class="media-body">
+              <div class="article-metadata">
+                  <a class="mr-2" href="#">{{ comment.name }}</a>
+                  <small class="text-muted">{{ comment.date_added|date:"Y-m-d H:i:s" }}</small>
+              </div>
+              <p class="article-content">{{ comment.body }}</p>
+          </div>
+      </div>
+      {% empty %}
+      <p>No comments yet.</p>
+      {% endfor %}
+      <a href="{% url 'add-comment' object.pk %}" class="btn btn-primary">Add Comment</a>
     </div>
   </article>
 {% endblock content %}
