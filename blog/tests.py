@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from .models import Category, Post
 
+#Adding tests to check category 
 class CategoryModelTest(TestCase):
 
     def setUp(self):
@@ -11,7 +12,7 @@ class CategoryModelTest(TestCase):
     def test_category_name(self):
         self.assertEqual(str(self.category), 'Test Category')
 
-
+#Adding tests to check posts
 class PostModelTest(TestCase):
 
     def setUp(self):

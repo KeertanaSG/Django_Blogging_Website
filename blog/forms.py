@@ -2,6 +2,7 @@ from django import forms
 from django.forms.widgets import ClearableFileInput
 from .models import Post, Category, Comment
 
+#retrieve all category names and store in a tuple
 choices = Category.objects.all().values_list('name','name')
 
 choices_list = []
@@ -9,6 +10,7 @@ choices_list = []
 for item in choices:
     choices_list.append(item)
 
+#Adding a form to create posts
 class PostForm(forms.ModelForm):
     category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False)
 
@@ -23,6 +25,7 @@ class PostForm(forms.ModelForm):
             'category': forms.Select(choices=choices_list,attrs={'class': 'form-control'})
         }
 
+#Adding a form to update posts
 class UpdateForm(forms.ModelForm):
     category = forms.ModelChoiceField(queryset=Category.objects.all(), required=False)
 
@@ -37,7 +40,7 @@ class UpdateForm(forms.ModelForm):
             'category': forms.Select(choices=choices_list,attrs={'class': 'form-control'})
         }
 
-
+#Adding a form to add comments
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
